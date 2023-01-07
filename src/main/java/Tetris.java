@@ -1,7 +1,14 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -130,13 +137,24 @@ public class Tetris extends JFrame {
         setVisible(true);
     }
 
-    private void startGame() {
+    private void startMusic() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                new File("src/main/resources/Original Tetris theme (Tetris Soundtrack).wav"));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        clip.start();
+    }
+
+    private void startGame() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.random = new Random();
         this.isNewGame = true;
         this.gameSpeed = 1.0f;
         //Set up the timer to keep the game from running before the user presses enter to start it.
         this.logicTimer = new Clock(gameSpeed);
         logicTimer.setPaused(true);
+
+        startMusic();
 
         while (true) {
             final long start = System.nanoTime();
@@ -312,7 +330,8 @@ public class Tetris extends JFrame {
         return currentRotation;
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args)
+            throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         final Tetris tetris = new Tetris();
         tetris.startGame();
     }
