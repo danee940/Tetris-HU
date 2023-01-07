@@ -1,5 +1,6 @@
 import java.awt.*;
 
+
 public enum TileType {
 
     TypeI(new Color(BoardPanel.COLOR_MIN, BoardPanel.COLOR_MAX, BoardPanel.COLOR_MAX), 4, 4, 1, new boolean[][] {
@@ -164,21 +165,13 @@ public enum TileType {
     });
 
     private final Color baseColor;
-
     private final Color lightColor;
-
     private final Color darkColor;
-
     private final int spawnCol;
-
     private final int spawnRow;
-
     private final int dimension;
-
     private final int rows;
-
     private final int cols;
-
     private final boolean[][] tiles;
 
     TileType(final Color color, final int dimension, final int cols, final int rows, final boolean[][] tiles) {

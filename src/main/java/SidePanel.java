@@ -5,33 +5,19 @@ import java.awt.*;
 public class SidePanel extends JPanel {
 
     private static final int TILE_SIZE = BoardPanel.TILE_SIZE >> 1;
-
     private static final int SHADE_WIDTH = BoardPanel.SHADE_WIDTH >> 1;
-
     private static final int TILE_COUNT = 5;
-
     private static final int SQUARE_CENTER_X = 130;
-
     private static final int SQUARE_CENTER_Y = 65;
-
     private static final int SQUARE_SIZE = (TILE_SIZE * TILE_COUNT >> 1);
-
     private static final int SMALL_INSET = 20;
-
     private static final int LARGE_INSET = 40;
-
     private static final int STATS_INSET = 175;
-
     private static final int CONTROLS_INSET = 300;
-
     private static final int TEXT_STRIDE = 25;
-
     private static final Font SMALL_FONT = new Font("Tahoma", Font.BOLD, 11);
-
     private static final Font LARGE_FONT = new Font("Tahoma", Font.BOLD, 13);
-
     private static final Color DRAW_COLOR = new Color(128, 192, 128);
-
     private final Tetris tetris;
 
     public SidePanel(final Tetris tetris) {
@@ -53,27 +39,24 @@ public class SidePanel extends JPanel {
         //without needing to change the other strings.
         int offset;
 
-        //Draw the "Stats" category.
         g.setFont(LARGE_FONT);
-        g.drawString("Stats", SMALL_INSET, offset = STATS_INSET);
+        g.drawString("Statisztikák", SMALL_INSET, offset = STATS_INSET);
         g.setFont(SMALL_FONT);
-        g.drawString("Level: " + tetris.getLevel(), LARGE_INSET, offset += TEXT_STRIDE);
-        g.drawString("Score: " + tetris.getScore(), LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("Szint: " + tetris.getLevel(), LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("Pont: " + tetris.getScore(), LARGE_INSET, offset += TEXT_STRIDE);
 
-        //Draw the "Controls" category.
         g.setFont(LARGE_FONT);
-        g.drawString("Controls", SMALL_INSET, offset = CONTROLS_INSET);
+        g.drawString("Billentyűzet", SMALL_INSET, offset = CONTROLS_INSET);
         g.setFont(SMALL_FONT);
-        g.drawString("A - Move Left", LARGE_INSET, offset += TEXT_STRIDE);
-        g.drawString("D - Move Right", LARGE_INSET, offset += TEXT_STRIDE);
-        g.drawString("Q - Rotate Anticlockwise", LARGE_INSET, offset += TEXT_STRIDE);
-        g.drawString("E - Rotate Clockwise", LARGE_INSET, offset += TEXT_STRIDE);
-        g.drawString("S - Drop", LARGE_INSET, offset += TEXT_STRIDE);
-        g.drawString("P - Pause Game", LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("A - Mozdulás jobbra", LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("D - Mozdulás balra", LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("Q - Fordulás jobbra", LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("E - Fordulás balra", LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("S - Esés", LARGE_INSET, offset += TEXT_STRIDE);
+        g.drawString("P - Szünet", LARGE_INSET, offset += TEXT_STRIDE);
 
-        //Draw the next piece preview box.
         g.setFont(LARGE_FONT);
-        g.drawString("Next Piece:", SMALL_INSET, 70);
+        g.drawString("Következő:", SMALL_INSET, 70);
         g.drawRect(SQUARE_CENTER_X - SQUARE_SIZE, SQUARE_CENTER_Y - SQUARE_SIZE, SQUARE_SIZE * 2, SQUARE_SIZE * 2);
 
         //Draw a preview of the next piece that will be spawned. The code is pretty much

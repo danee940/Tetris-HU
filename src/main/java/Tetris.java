@@ -7,65 +7,37 @@ import java.util.Random;
 
 public class Tetris extends JFrame {
 
-    private static final long serialVersionUID = -4722429764792514382L;
-
     private static final long FRAME_TIME = 1000L / 50L;
-
     private static final int TYPE_COUNT = TileType.values().length;
-
     private final BoardPanel board;
-
     private final SidePanel side;
-
     private boolean isPaused;
-
     private boolean isNewGame;
-
     private boolean isGameOver;
-
     private int level;
-
     private int score;
-
     private Random random;
-
     private Clock logicTimer;
-
     private TileType currentType;
-
     private TileType nextType;
-
     private int currentCol;
-
     private int currentRow;
-
     private int currentRotation;
-
     private int dropCooldown;
-
     private float gameSpeed;
 
     private Tetris() {
-        //Set the basic properties of the window.
         super("Tetris");
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-
-        //Initialize the BoardPanel and SidePanel instances.
         this.board = new BoardPanel(this);
         this.side = new SidePanel(this);
-
-        //Add the BoardPanel and SidePanel instances to the window.
         add(board, BorderLayout.CENTER);
         add(side, BorderLayout.EAST);
-
-        //Adds a custom anonymous KeyListener to the frame.
         addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(final KeyEvent e) {
-
                 switch (e.getKeyCode()) {
 
                     //Drop - When pressed, we check to see that the game is not
@@ -159,35 +131,23 @@ public class Tetris extends JFrame {
     }
 
     private void startGame() {
-        //Initialize our random number generator, logic timer, and new game variables.
         this.random = new Random();
         this.isNewGame = true;
         this.gameSpeed = 1.0f;
-
         //Set up the timer to keep the game from running before the user presses enter to start it.
         this.logicTimer = new Clock(gameSpeed);
         logicTimer.setPaused(true);
 
         while (true) {
-            //Get the time that the frame started.
             final long start = System.nanoTime();
-
-            //Update the logic timer.
             logicTimer.update();
-
-            //If a cycle has elapsed on the timer, we can update the game and move our current piece down.
             if (logicTimer.hasElapsedCycle()) {
                 updateGame();
             }
-
-            //Decrement the drop cool down if necessary.
             if (dropCooldown > 0) {
                 dropCooldown--;
             }
-
-            //Display the window to the user.
             renderGame();
-
             //Sleep to cap the framerate.
             final long delta = (System.nanoTime() - start) / 1000000L;
             if (delta < FRAME_TIME) {

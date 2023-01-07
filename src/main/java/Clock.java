@@ -1,13 +1,9 @@
 public class Clock {
 
     private float millisPerCycle;
-
     private long lastUpdate;
-
     private int elapsedCycles;
-
     private float excessCycles;
-
     private boolean isPaused;
 
     public Clock(final float cyclesPerSecond) {

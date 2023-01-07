@@ -5,37 +5,21 @@ import java.awt.*;
 public class BoardPanel extends JPanel {
 
     public static final int COLOR_MIN = 35;
-
     public static final int COLOR_MAX = 255 - COLOR_MIN;
-
     private static final int BORDER_WIDTH = 5;
-
     public static final int COL_COUNT = 10;
-
     private static final int VISIBLE_ROW_COUNT = 20;
-
     private static final int HIDDEN_ROW_COUNT = 2;
-
     public static final int ROW_COUNT = VISIBLE_ROW_COUNT + HIDDEN_ROW_COUNT;
-
     public static final int TILE_SIZE = 24;
-
     public static final int SHADE_WIDTH = 4;
-
     private static final int CENTER_X = COL_COUNT * TILE_SIZE / 2;
-
     private static final int CENTER_Y = VISIBLE_ROW_COUNT * TILE_SIZE / 2;
-
     public static final int PANEL_WIDTH = COL_COUNT * TILE_SIZE + BORDER_WIDTH * 2;
-
     public static final int PANEL_HEIGHT = VISIBLE_ROW_COUNT * TILE_SIZE + BORDER_WIDTH * 2;
-
     private static final Font LARGE_FONT = new Font("Tahoma", Font.BOLD, 16);
-
     private static final Font SMALL_FONT = new Font("Tahoma", Font.BOLD, 12);
-
     private final Tetris tetris;
-
     private final TileType[][] tiles;
 
     public BoardPanel(final Tetris tetris) {
@@ -150,7 +134,7 @@ public class BoardPanel extends JPanel {
         if (tetris.isPaused()) {
             g.setFont(LARGE_FONT);
             g.setColor(Color.WHITE);
-            final String msg = "PAUSED";
+            final String msg = "SZÜNET";
             g.drawString(msg, CENTER_X - g.getFontMetrics().stringWidth(msg) / 2, CENTER_Y);
         } else if (tetris.isNewGame() || tetris.isGameOver()) {
             g.setFont(LARGE_FONT);
@@ -159,10 +143,10 @@ public class BoardPanel extends JPanel {
             //Because both the game over and new game screens are nearly identical,
             //we can handle them together and just use a ternary operator to change
             //the messages that are displayed.
-            String msg = tetris.isNewGame() ? "TETRIS" : "GAME OVER";
+            String msg = tetris.isNewGame() ? "TETRIS" : "JÁTÉK VÉGE";
             g.drawString(msg, CENTER_X - g.getFontMetrics().stringWidth(msg) / 2, 150);
             g.setFont(SMALL_FONT);
-            msg = "Press Enter to Play" + (tetris.isNewGame() ? "" : " Again");
+            msg = tetris.isNewGame() ? "Kezdéshes nyomja: Enter" : "Ismétlés: Enter";
             g.drawString(msg, CENTER_X - g.getFontMetrics().stringWidth(msg) / 2, 300);
         } else {
 
@@ -199,7 +183,12 @@ public class BoardPanel extends JPanel {
             //a better way to implement this, so it'll have to do for now. We simply take the current position and move
             //down until we hit a row that would cause a collision.
             Color base = type.getBaseColor();
-            base = new Color(base.getRed(), base.getGreen(), base.getBlue(), 20);
+            int alpha = 20;
+            if (type == TileType.TypeJ || type == TileType.TypeT) {
+                alpha = 40;
+            }
+            base = new Color(base.getRed(), base.getGreen(), base.getBlue(), alpha);
+
             for (int lowest = pieceRow; lowest < ROW_COUNT; lowest++) {
                 //If no collision is detected, try the next row.
                 if (isValidAndEmpty(type, pieceCol, lowest, rotation)) {
